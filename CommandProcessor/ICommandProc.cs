@@ -2,7 +2,7 @@
 
 namespace ConsoleApp1.CommandProcessor
 {
-    interface ICommandProcessor
+    interface ICommandProc
     {
         ICommand ProcessCommand();
         void ReadCommand();

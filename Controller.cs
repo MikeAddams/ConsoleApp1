@@ -1,25 +1,19 @@
 ﻿using ConsoleApp1.CommandProcessor;
 using ConsoleApp1.NoteModule;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleApp1
 {
-    class Controller
+    class Controller : IController
     {
-        private readonly ICommandProcessor CommandProcessor;
-        //private readonly
+        private readonly ICommandProc CommandProcessor;
 
-        public Controller(ICommandProcessor commandProcessor)
+        public Controller(ICommandProc commandProcessor)
         {
             CommandProcessor = commandProcessor;
         }
 
         public void Logic()
         {
-            NoteConfig NoteSettings = new NoteConfig();
-
             while (true)
             {
                 CommandProcessor.ReadCommand();
