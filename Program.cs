@@ -17,12 +17,6 @@ namespace ConsoleApp1
                 var app = scope.Resolve<IController>();
                 app.Logic();
             }
-
-            /*
-            var controller = new Controller(new CommandProc());
-
-            controller.Logic();
-            */
         }
     }
 }

@@ -8,10 +8,12 @@ namespace ConsoleApp1.CommandProcessor.NoteCommands
     class EditNoteCommand : ICommand
     {
         private IEditNote note;
+
         public EditNoteCommand(IEditNote _note)
         {
             note = _note;
         }
+
         public void ExecuteCommand()
         {
             note.Edit();

@@ -1,51 +1,66 @@
 ﻿using ConsoleApp1.NoteModule.Reader;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace ConsoleApp1.NoteModule.Operations
 {
     class EditNote : IEditNote
     {
-        private NoteConfig note;
+        private NoteConfig noteParams;
 
         public EditNote(NoteConfig _note)
         {
-            note = _note;
+            noteParams = _note;
         }
 
         public void Edit()
         {
-            string NoteName = NoteReader.GetNoteName();
-            string NoteTitle = NoteReader.GetNoteTitle();
-            string NoteText = NoteReader.GetNoteText();
+            string NoteName = NoteReader.GetNoteName("you want to change");
+            bool found = false;
 
             try
             {
-                /*
-                XDocument xdoc = XDocument.Load(note.NotePath);
-                XElement root = xdoc.Element(note.RootTag);
+                XElement notes = XElement.Load(noteParams.NotePath);
 
-                foreach (XElement xe in root.Elements(note.NoteTag).ToList())
+                foreach (var note in notes.Descendants(noteParams.NoteTag))
                 {
-                    if (xe.Attribute(note.NoteTagAttribute).Value == "Samsung Galaxy S5")
+                    if (note.Attribute("name").Value == NoteName)
                     {
-                        xe.Attribute("name").Value = "Samsung Galaxy Note 4";
-                        xe.Element("price").Value = "31000";
-                    }
-                    //если iphone - удаляем его
-                    else if (xe.Attribute("name").Value == "iPhone 6")
-                    {
-                        xe.Remove();
+                        Console.WriteLine($"\nNote NAME: {note.Attribute(noteParams.NoteTagAttribute).Value}");
+                        if (NoteReader.AskTo("change"))
+                        {
+                            note.Attribute("name").Value = NoteReader.GetNoteName();
+                        }
+
+                        Console.WriteLine($"\nNote TITLE: {note.Element(noteParams.NoteTitleTag).Value}");
+                        if (NoteReader.AskTo("change"))
+                        {
+                            note.Element("title").Value = NoteReader.GetNoteTitle();
+                        }
+
+                        Console.WriteLine($"\nNote TEXT: {note.Element(noteParams.NoteTextTag).Value}");
+                        if (NoteReader.AskTo("change"))
+                        {
+                            note.Element("text").Value = NoteReader.GetNoteText();
+                        }
+
+                        found = true;
+                        notes.Save(noteParams.NotePath);
                     }
                 }
-                */
+
+                if (!found)
+                {
+                    NoteReader.NothingFound();
+                }
+                else
+                {
+                    NoteReader.CompletedSuccssfully();
+                }
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"\n{e.Message}");
             }
         }
     }

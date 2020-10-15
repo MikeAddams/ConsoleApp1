@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using ConsoleApp1.CommandProcessor.ConsoleCommands;
 using ConsoleApp1.CommandProcessor.NoteCommands;
-using ConsoleApp1.NoteModule;
-using ConsoleApp1.NoteModule.Operations;
 using System;
 
 namespace ConsoleApp1.CommandProcessor
@@ -13,9 +11,9 @@ namespace ConsoleApp1.CommandProcessor
 
         public ICommand ProcessCommand()
         {
-            var container = ContainerConfig.Configure();
+            //var container = ContainerConfig.Configure();
 
-            using (var scope = container.BeginLifetimeScope())
+            using (var scope = ContainerConfig.Configure().BeginLifetimeScope())
             {
                 switch (Commnad.ToLower())
                 {
@@ -24,11 +22,17 @@ namespace ConsoleApp1.CommandProcessor
                     case "edit":
                         return scope.Resolve<EditNoteCommand>();
                     case "read":
-                        return new ReadNoteCommand();
+                        return scope.Resolve<ReadNoteCommand>();
                     case "delete":
-                        return new DeleteNoteCommand();
+                        return scope.Resolve<DeleteNoteCommand>();
+                    case "showall":
+                        return scope.Resolve<ShowAllNotesCommand>();
+                    case "deleteall":
+                        return scope.Resolve<DeleteAllNotesCommand>();
                     case "exit":
                         return new Exit();
+                    case "cls":
+                        return new Clear();
                     default:
                         Console.WriteLine("Incorrect command\n");
                         break;

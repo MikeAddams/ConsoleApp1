@@ -8,7 +8,7 @@ namespace ConsoleApp1.CommandProcessor.ConsoleCommands
     {
         public void ExecuteCommand()
         {
-            throw new NotImplementedException();
+            Console.Clear();
         }
     }
 }

@@ -7,38 +7,38 @@ namespace ConsoleApp1.NoteModule
 {
     class AddNote : IAddNote
     {
-        private NoteConfig note;
+        private NoteConfig noteParams;
 
         public AddNote(NoteConfig _note)
         {
-            note = _note;
+            noteParams = _note;
         }
 
         public void Add()
         {
             XDocument xdoc;
 
-            XElement composedXml = new XElement(note.NoteTag,
-                            new XAttribute(note.NoteTagAttribute, NoteReader.GetNoteName()),
-                            new XElement(note.NoteTitleTag, NoteReader.GetNoteTitle()),
-                            new XElement(note.NoteTextTag, NoteReader.GetNoteText()));
+            XElement composedXml = new XElement(noteParams.NoteTag,
+                            new XAttribute(noteParams.NoteTagAttribute, NoteReader.GetNoteName()),
+                            new XElement(noteParams.NoteTitleTag, NoteReader.GetNoteTitle()),
+                            new XElement(noteParams.NoteTextTag, NoteReader.GetNoteText()));
+            Console.WriteLine();
 
-            if (File.Exists(note.NotePath))
+            if (File.Exists(noteParams.NotePath))
             {
                 XElement root;
 
-                xdoc = XDocument.Load(note.NotePath);
-                root = xdoc.Element(note.RootTag);
+                xdoc = XDocument.Load(noteParams.NotePath);
+                root = xdoc.Element(noteParams.RootTag);
 
                 root.Add(composedXml);
             }
             else
             {
-                xdoc = new XDocument(new XElement(note.RootTag, composedXml));
+                xdoc = new XDocument(new XElement(noteParams.RootTag, composedXml));
             }
 
-            xdoc.Save(note.NotePath);
+            xdoc.Save(noteParams.NotePath);
         }
     }
-
 }

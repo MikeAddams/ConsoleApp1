@@ -5,18 +5,18 @@ using System.Text;
 
 namespace ConsoleApp1.CommandProcessor.NoteCommands
 {
-    class DeleteAllNotesCommand : ICommand
+    class DeleteNoteCommand : ICommand
     {
-        private IDeleteAllNotes note;
+        private IDeleteNote note;
 
-        public DeleteAllNotesCommand(IDeleteAllNotes _note)
+        public DeleteNoteCommand(IDeleteNote _note)
         {
             note = _note;
         }
 
         public void ExecuteCommand()
         {
-            note.DeleteAll();
+            note.Delete();
         }
     }
 }

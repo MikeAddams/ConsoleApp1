@@ -3,9 +3,6 @@ using ConsoleApp1.CommandProcessor;
 using ConsoleApp1.CommandProcessor.NoteCommands;
 using ConsoleApp1.NoteModule;
 using ConsoleApp1.NoteModule.Operations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleApp1
 {
@@ -22,10 +19,17 @@ namespace ConsoleApp1
 
             builder.RegisterType<AddNote>().As<IAddNote>();
             builder.RegisterType<EditNote>().As<IEditNote>();
+            builder.RegisterType<DeleteNote>().As<IDeleteNote>();
+            builder.RegisterType<ReadNote>().As<IReadNote>();
+            builder.RegisterType<ShowAllNotes>().As<IShowAllNotes>();
+            builder.RegisterType<DeleteAllNotes>().As<IDeleteAllNotes>();
 
             builder.RegisterType<NewNoteCommand>().AsSelf();
             builder.RegisterType<EditNoteCommand>().AsSelf();
-
+            builder.RegisterType<DeleteNoteCommand>().AsSelf();
+            builder.RegisterType<ReadNoteCommand>().AsSelf();
+            builder.RegisterType<ShowAllNotesCommand>().AsSelf();
+            builder.RegisterType<DeleteAllNotesCommand>().AsSelf();
 
             return builder.Build();
         }
